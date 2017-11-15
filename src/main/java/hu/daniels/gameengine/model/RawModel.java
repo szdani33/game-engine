@@ -1,4 +1,4 @@
-package hu.daniels.gameengine;
+package hu.daniels.gameengine.model;
 
 public class RawModel {
 

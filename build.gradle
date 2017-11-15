@@ -11,11 +11,11 @@ repositories {
 
 ext {
     lwjglVersion = '2.9.3'
+    commonsIoVersion = '2.5'
 }
 
 dependencies {
     compile "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
-    compile "commons-io:commons-io:2.5"
-
+    compile "commons-io:commons-io:$commonsIoVersion"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
