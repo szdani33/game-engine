@@ -1,14 +1,20 @@
 package hu.daniels.gameengine.shader;
 
 import org.apache.commons.io.FileUtils;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.nio.charset.Charset;
 
 public abstract class ShaderProgram {
+    private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+
     private final int programId;
     private final int vertexShaderId;
     private final int fragmentShaderId;
@@ -19,8 +25,16 @@ public abstract class ShaderProgram {
         programId = GL20.glCreateProgram();
         GL20.glAttachShader(programId, vertexShaderId);
         GL20.glAttachShader(programId, fragmentShaderId);
+        bindAttributes();
         GL20.glLinkProgram(programId);
         GL20.glValidateProgram(programId);
+        getAllUniformLocations();
+    }
+
+    protected abstract void getAllUniformLocations();
+
+    protected int getUniformLocation(String uniformName) {
+        return GL20.glGetUniformLocation(programId, uniformName);
     }
 
     public void start() {
@@ -45,6 +59,25 @@ public abstract class ShaderProgram {
     }
 
     protected abstract void bindAttributes();
+
+    protected void loadFloat(int location, float value) {
+        GL20.glUniform1f(location, value);
+    }
+
+    protected void loadVecror(int location, Vector3f vector) {
+        GL20.glUniform3f(location, vector.x, vector.y, vector.z);
+    }
+
+    protected void loadBoolean(int location, boolean value) {
+        float toLoad = value ? 1f : 0f;
+        GL20.glUniform1f(location, toLoad);
+    }
+
+    protected void loadMatrix(int location, Matrix4f matrix) {
+        matrix.store(matrixBuffer);
+        matrixBuffer.flip();
+        GL20.glUniformMatrix4(location, false, matrixBuffer);
+    }
 
     public int loadShader(String file, int type) {
         String shaderSource = readShaderSource(file);
