@@ -3,6 +3,7 @@ package hu.daniels.gameengine;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
+import hu.daniels.gameengine.entity.Camera;
 import hu.daniels.gameengine.entity.Entity;
 import hu.daniels.gameengine.model.RawModel;
 import hu.daniels.gameengine.model.TexturedModel;
@@ -39,12 +40,15 @@ public class GameLoop {
         ModelTexture modelTexture = new ModelTexture(loader.loadTexture("fcb.png"));
         TexturedModel texturedModel = new TexturedModel(rawModel, modelTexture);
         Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -1), 0, 0, 0, 1);
+        Camera camera = new Camera();
 
         while (!Display.isCloseRequested()) {
-            entity.increasePosition(0, 0, -0.02f);
+            entity.increasePosition(0, 0, 0);
             entity.increaseRotation(0, 1, 1);
+            camera.move();
             renderer.prepare();
             staticShaderProgram.start();
+            staticShaderProgram.loadViewMatrix(camera);
             renderer.render(entity, staticShaderProgram);
             staticShaderProgram.stop();
             DisplayManager.updateDisplay();
