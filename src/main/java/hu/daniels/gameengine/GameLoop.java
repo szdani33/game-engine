@@ -29,21 +29,19 @@ public class GameLoop {
             1, 1
     };
 
-    private static Loader loader = new Loader();
-    private static Renderer renderer = new Renderer();
-    private static StaticShaderProgram staticShaderProgram;
-
     public static void main(String[] args) {
         DisplayManager.createDisplay();
-        staticShaderProgram = new StaticShaderProgram();
+        Loader loader = new Loader();
+        StaticShaderProgram staticShaderProgram = new StaticShaderProgram();
+        Renderer renderer = new Renderer(staticShaderProgram);
 
         RawModel rawModel = loader.loadIntoVAO(VERTICES, TEXTURE_COORDINATES, INDICES);
         ModelTexture modelTexture = new ModelTexture(loader.loadTexture("fcb.png"));
         TexturedModel texturedModel = new TexturedModel(rawModel, modelTexture);
-        Entity entity = new Entity(texturedModel, new Vector3f(-1, 0, 0), 0, 0, 0, 1);
+        Entity entity = new Entity(texturedModel, new Vector3f(0, 0, -1), 0, 0, 0, 1);
 
         while (!Display.isCloseRequested()) {
-            entity.increasePosition(0.002f, 0, 0);
+            entity.increasePosition(0, 0, -0.02f);
             entity.increaseRotation(0, 1, 1);
             renderer.prepare();
             staticShaderProgram.start();
