@@ -4,27 +4,47 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
+    private static final float CAM_MOVEMENT_SPEED = 0.02f;
+    private static final float CAM_ROTATION_SPEED = 0.2f;
 
     private Vector3f position = new Vector3f(0 ,0, 0);
     private float pitch;
     private float yaw;
     private float roll;
 
-    public Camera() {
-    }
-
     public void move() {
-        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            position.z -= 0.02f;
+        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            position.x -= CAM_MOVEMENT_SPEED;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            position.x += 0.02f;
+            position.x += CAM_MOVEMENT_SPEED;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            position.x -= 0.02f;
+        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+            position.z -= CAM_MOVEMENT_SPEED;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            position.z += 0.02f;
+            position.z += CAM_MOVEMENT_SPEED;
+        }
+    }
+
+    public void rotate() {
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
+            pitch -= CAM_ROTATION_SPEED;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
+            pitch += CAM_ROTATION_SPEED;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
+            yaw -= CAM_ROTATION_SPEED;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)) {
+            yaw += CAM_ROTATION_SPEED;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD7)) {
+            roll -= CAM_ROTATION_SPEED;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)) {
+            roll += CAM_ROTATION_SPEED;
         }
     }
 

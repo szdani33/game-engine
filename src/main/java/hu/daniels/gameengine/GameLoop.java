@@ -44,8 +44,9 @@ public class GameLoop {
 
         while (!Display.isCloseRequested()) {
             entity.increasePosition(0, 0, 0);
-            entity.increaseRotation(0, 1, 1);
+//            entity.increaseRotation(0, 1, 1);
             camera.move();
+            camera.rotate();
             renderer.prepare();
             staticShaderProgram.start();
             staticShaderProgram.loadViewMatrix(camera);
