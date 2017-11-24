@@ -3,9 +3,13 @@ package hu.daniels.gameengine.entity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
+
 public class Camera {
     private static final float CAM_MOVEMENT_SPEED = 0.02f;
-    private static final float CAM_ROTATION_SPEED = 0.2f;
+    private static final float CAM_ROTATION_SPEED = 0.5f;
 
     private Vector3f position = new Vector3f(0 ,0, 0);
     private float pitch;
@@ -14,38 +18,42 @@ public class Camera {
 
     public void move() {
         if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            position.x -= CAM_MOVEMENT_SPEED;
+            position.x -= CAM_MOVEMENT_SPEED * cos(toRadians(yaw));
+            position.z -= CAM_MOVEMENT_SPEED * sin(toRadians(yaw));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            position.x += CAM_MOVEMENT_SPEED;
+            position.x += CAM_MOVEMENT_SPEED * cos(toRadians(yaw));
+            position.z += CAM_MOVEMENT_SPEED * sin(toRadians(yaw));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            position.z -= CAM_MOVEMENT_SPEED;
+            position.x += CAM_MOVEMENT_SPEED * sin(toRadians(yaw));
+            position.z -= CAM_MOVEMENT_SPEED * cos(toRadians(yaw));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            position.z += CAM_MOVEMENT_SPEED;
+            position.x -= CAM_MOVEMENT_SPEED * sin(toRadians(yaw));
+            position.z += CAM_MOVEMENT_SPEED * cos(toRadians(yaw));
         }
     }
 
     public void rotate() {
-        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
-            pitch -= CAM_ROTATION_SPEED;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
-            pitch += CAM_ROTATION_SPEED;
-        }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
+//            pitch -= CAM_ROTATION_SPEED;
+//        }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
+//            pitch += CAM_ROTATION_SPEED;
+//        }
         if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
             yaw -= CAM_ROTATION_SPEED;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)) {
             yaw += CAM_ROTATION_SPEED;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD7)) {
-            roll -= CAM_ROTATION_SPEED;
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)) {
-            roll += CAM_ROTATION_SPEED;
-        }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD7)) {
+//            roll -= CAM_ROTATION_SPEED;
+//        }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)) {
+//            roll += CAM_ROTATION_SPEED;
+//        }
     }
 
     public Vector3f getPosition() {
