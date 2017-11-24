@@ -27,21 +27,29 @@ public class Camera {
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
             position.x += CAM_MOVEMENT_SPEED * sin(toRadians(yaw));
-            position.z -= CAM_MOVEMENT_SPEED * cos(toRadians(yaw));
+            position.y -= CAM_MOVEMENT_SPEED * sin(toRadians(pitch));
+            position.z -= CAM_MOVEMENT_SPEED * cos(toRadians(yaw)) * cos(toRadians(pitch));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
             position.x -= CAM_MOVEMENT_SPEED * sin(toRadians(yaw));
-            position.z += CAM_MOVEMENT_SPEED * cos(toRadians(yaw));
+            position.y += CAM_MOVEMENT_SPEED * sin(toRadians(pitch));
+            position.z += CAM_MOVEMENT_SPEED * cos(toRadians(yaw)) * cos(toRadians(pitch));
         }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
+//            position.y += CAM_MOVEMENT_SPEED ;
+//        }
+//        if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
+//            position.y -= CAM_MOVEMENT_SPEED ;
+//        }
     }
 
     public void rotate() {
-//        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
-//            pitch -= CAM_ROTATION_SPEED;
-//        }
-//        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
-//            pitch += CAM_ROTATION_SPEED;
-//        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
+            pitch -= CAM_ROTATION_SPEED;
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
+            pitch += CAM_ROTATION_SPEED;
+        }
         if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
             yaw -= CAM_ROTATION_SPEED;
         }
